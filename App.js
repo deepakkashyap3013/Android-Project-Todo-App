@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import Header from "./components/header";
 import TodoItem from "./components/TodoItem";
 import AddTodo from "./components/addToDo";
@@ -13,29 +20,37 @@ export default function App() {
 
   const pressHandler = (key) => {
     const Updated = todo.filter((item) => item.key !== key);
-    console.log("clicked");
+    // console.log("clicked");
     setTodo(Updated);
   };
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <Header />
-      <View style={styles.content}>
-        {/* todo form */}
-        <AddTodo setTodo={setTodo} currList={todo} />
-        <View style={styles.list}>
-          <FlatList
-            data={todo}
-            renderItem={({ item }) => {
-              return (
-                <TodoItem {...item} id={item.key} pressHandler={pressHandler} />
-              );
-            }}
-          />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {/* making the entire body touchable so that whenever we touch somewhere it
+      dismisses the keyboard.. this can seen used in the addToDo.js */}
+      <View style={styles.container}>
+        {/* Header */}
+        <Header />
+        <View style={styles.content}>
+          {/* todo form */}
+          <AddTodo setTodo={setTodo} currList={todo} />
+          <View style={styles.list}>
+            <FlatList
+              data={todo}
+              renderItem={({ item }) => {
+                return (
+                  <TodoItem
+                    {...item}
+                    id={item.key}
+                    pressHandler={pressHandler}
+                  />
+                );
+              }}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

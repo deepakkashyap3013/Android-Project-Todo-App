@@ -1,16 +1,33 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  Alert,
+  Keyboard,
+} from "react-native";
 
 const AddtoDo = ({ setTodo, currList }) => {
   const [newItem, setNewItem] = useState("");
 
   const addItem = () => {
-    if (newItem) {
+    if (newItem.length > 2) {
       const newTodo = {
         text: newItem,
         key: new Date().getTime().toString(),
       };
       setTodo([newTodo, ...currList]);
+      Keyboard.dismiss(); // dismissing the keyboard after the work is over
+    } else {
+      // this is how to add user Interaction
+      Alert.alert("Opps!", "Todos should be atlease 3 char long", [
+        {
+          text: "Got it",
+          onPress: () => console.log("alert Closed"),
+        },
+      ]);
     }
     setNewItem("");
   };
