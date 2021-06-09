@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   content: {
+    flex: 1,
     padding: 40,
   },
   list: {
+    flex: 1,
     marginTop: 20,
   },
 });
